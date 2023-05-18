@@ -12,7 +12,7 @@ public class UserModify {
 		Scanner scn = new Scanner(System.in);
 		Calendar cal = Calendar.getInstance();
 		
-		System.out.print("사용하실 아이디를 입력해주세요.(6~12자. 영어 대소문자와 _,-까지만 허용) >>");
+		System.out.print("사용하실 아이디를 입력해주세요.(6~12자. 영어 대소문자와 숫자 _,-까지만 허용) >>");
 		String userId = scn.next();		
 		
 		String pattern = "^[a-zA-Z]{1}[a-zA-Z0-9_-]{5,11}$";
@@ -25,13 +25,13 @@ public class UserModify {
 		
 		System.out.print("생년월일을 입력해주세요.(YYYY-MM-DD) >>");
 		String userBirth = scn.next();
-		int yyy = cal.get(Calendar.YEAR);
+		int yyy = cal.get(Calendar.YEAR);//올해날짜까지만을 위한 변수
 		pattern = "[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}";
 		if(userBirth.matches(pattern)) {
 			String[] tempBirth = userBirth.split("-");
-			int yy = Integer.parseInt(tempBirth[0]);
-			int mm = Integer.parseInt(tempBirth[1]);
-			int dd = Integer.parseInt(tempBirth[2]);
+			int yy = Integer.parseInt(tempBirth[0]);//년
+			int mm = Integer.parseInt(tempBirth[1]);//월
+			int dd = Integer.parseInt(tempBirth[2]);//일
 			if((yy>1870 && yy<=yyy) && (mm>0 && mm<13) && (dd>0 && dd<32)) {
 				System.out.println("올바른 날짜");
 			}else {
@@ -48,9 +48,9 @@ public class UserModify {
 		String userPhone = scn.next();
 		
 		pattern = "01(0|1[6-9])-[0-9]{3,4}-[0-9]{4}";
-		String tempPh1 = "";
-		String tempPh2 = "";
-		String tempPh3 = "";
+		String tempPh1 = "";	//010,011,016~9
+		String tempPh2 = "";	//가운데 번호
+		String tempPh3 = "";	//마지막 번호
 		if(userPhone.length() == 10) {
 			tempPh1 = userPhone.substring(0,3);
 			tempPh2 = userPhone.substring(3,6);
@@ -59,16 +59,16 @@ public class UserModify {
 			tempPh1 = userPhone.substring(0,3);
 			tempPh2 = userPhone.substring(3,7);
 			tempPh3 = userPhone.substring(7);
-		} else {
+		} else {//10 또는 11자리여야함
 			System.out.println("핸드폰번호를 다시 확인해주세요");
 			saveUser();
 		}
 		
-		userPhone = tempPh1+"-"+tempPh2+"-"+tempPh3;
+		userPhone = tempPh1+"-"+tempPh2+"-"+tempPh3;//자릿수 확인후 패턴검증을 위해 -를 포함해서 저장시킴
 		
 		if(userPhone.matches(pattern)) {
 			System.out.println("올바른 핸드폰 번호");
-		} else {
+		} else {//012,013등은 없는 번호
 			System.out.println("핸드폰번호를 다시 확인해주세요");
 			return;
 		}
@@ -115,25 +115,24 @@ public class UserModify {
 		String fileName = "C:\\html_test\\member.txt";
 		
 		FileReader file = new FileReader(fileName);
-		//	파일안의 내용을 읽어드리는 클래스.
 		BufferedReader buffer = new BufferedReader(file);
 		String rowData = "";
 		String id = "";
 		String birth = "";
 		String phone = "";
 		while(true){
-			if( (rowData = buffer.readLine()) != null ){//끝에 다다르면 break를 통해 종료함
+			if( (rowData = buffer.readLine()) != null ){
 				
 				String[] str = rowData.split("/");
-				id = str[0];
-				birth = str[1];
-				phone = str[2];
-				id = id.substring(0,3);
-				birth = birth.substring(0,4);
-				int yy = cal.get(Calendar.YEAR);
-				int year = yy-Integer.parseInt(birth);
-				if(year<10) {
-					System.out.println(id+"\t\t"+birth+"("+year+")\t\t\t"+phone);
+				id = str[0];//아이디
+				birth = str[1];//생년월일
+				phone = str[2];//휴대폰번호
+				id = id.substring(0,3);//아이디 3글자만 출력
+				birth = birth.substring(0,4);//목록 리스트에는 연도만 출력하고 나이 계산용 변수
+				int yy = cal.get(Calendar.YEAR);//나이 계산을 위한 현재연도
+				int year = yy-Integer.parseInt(birth);//나이
+				if(year<10) {//출력 칸을 맞추기 위해 0~9세까지는 "\t"를 하나 더 출력
+					System.out.println(id+"\t\t"+birth+"("+year+")\t\t"+phone);
 				}else {
 				System.out.println(id+"\t\t"+birth+"("+year+")\t\t"+phone);
 				}
@@ -153,7 +152,6 @@ public class UserModify {
 		String fileName = "C:\\html_test\\member.txt";
 		
 		FileReader file = new FileReader(fileName);
-		//	파일안의 내용을 읽어드리는 클래스.
 		BufferedReader buffer = new BufferedReader(file);
 		String rowData = "";
 		String id = "";
@@ -161,10 +159,10 @@ public class UserModify {
 		String phone = "";
 		String myData = "";
 		while(true){
-			if( (rowData = buffer.readLine()) != null ){//끝에 다다르면 break를 통해 종료함
+			if( (rowData = buffer.readLine()) != null ){
 				if((rowData.indexOf(userId) > -1)) {
-					myData = rowData;
-					String[] str = rowData.split("/");
+					myData = rowData;//아이디 유무확인용
+					String[] str = rowData.split("/");//아이디 생일 휴대폰을 한줄씩 출력하기 위해 split사용
 					id = str[0];
 					birth = str[1];
 					phone = str[2];
@@ -175,7 +173,7 @@ public class UserModify {
 			}
 		}
 		
-		if(myData.equals("")) {
+		if(myData.equals("")) {//myData에 값이 없으면 없는 아이디
 			System.out.println("아이디를 확인해주세요.");
 			return;
 		}
@@ -195,19 +193,18 @@ public class UserModify {
 		String fileName = "C:\\html_test\\member.txt";
 		
 		FileReader file = new FileReader(fileName);
-		//	파일안의 내용을 읽어드리는 클래스.
 		BufferedReader buffer = new BufferedReader(file);
 		
 		String rowData = "";
 		String myData = "false";
 		String otherData = "";
 		while(true){
-			if( (rowData = buffer.readLine()) != null ){//끝에 다다르면 break를 통해 종료함
-				if(((rowData.indexOf(userId+"/")) >- 1)) {
-					rowData = "";
-					myData = "true";
+			if( (rowData = buffer.readLine()) != null ){
+				if(((rowData.indexOf(userId+"/")) >- 1)) {//aaa aaa1 aaa2등을 방지하기위해 "/"까지 검색
+					rowData = "";//검색된 아이디의 데이터를 삭제
+					myData = "true";//아이디 유무 확인용 
 				}else {
-					otherData += rowData+"\n";
+					otherData += rowData+"\n";//해당 아이디 값이 아닌 데이터를 임시저장하는 변수
 				}
 			} else {
 				break;
@@ -215,7 +212,7 @@ public class UserModify {
 		}
 		
 		
-		if(myData.equals("false")) {
+		if(myData.equals("false")) {//if문을 통과하지 못했기때문에 myData값이 false
 			System.out.println("아이디를 확인해주세요.");
 			return;		
 		}
