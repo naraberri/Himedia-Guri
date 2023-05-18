@@ -41,4 +41,37 @@ public class CalendarTest3 {//20001010
 			}
 		}
 	}
+
+	public static void calview(int yy, int mm) {
+		Calendar cal = Calendar.getInstance();
+		
+		cal.set(yy,mm-1,1);
+		
+		int week = cal.get(Calendar.DAY_OF_WEEK);		
+		int lastDay = cal.getActualMaximum(Calendar.DATE); //이번달의 마지막 날짜
+		int ln = 0;
+		
+		System.out.println("----"+yy+"년 "+mm+"월 달력----");
+		for(int w=1;w<week;w++) {
+			System.out.print("   ");
+			ln++;
+		}
+		
+		for(int d=1; d<=lastDay; d++) {
+			if(d<10) {
+				System.out.print("0"+d + " ");
+				ln++;
+			}else {
+				System.out.print(d + " ");
+				ln++;
+			}
+			
+			
+			if(ln == 7) {
+				System.out.println();//개행
+				ln = 0;
+			}
+		}
+		
+	}
 }
