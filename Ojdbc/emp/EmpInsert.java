@@ -10,7 +10,8 @@ public class EmpInsert extends DbConnect {
 
 	public static void main(String[] args) throws Exception {
 		
-		Statement stmt = Connection();
+		// 인스턴스(객체) 처리 == 작업공간 발생
+				Statement stmt = Connection().createStatement();
 		
 		Scanner scn = new Scanner(System.in);
 		

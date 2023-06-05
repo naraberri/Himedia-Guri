@@ -9,7 +9,8 @@ public class EmpSelectList extends DbConnect {
 
 	public static void main(String[] args) throws Exception {
 		
-		Statement stmt = Connection();
+		// 인스턴스(객체) 처리 == 작업공간 발생
+		Statement stmt = Connection().createStatement();
 		
 		String sql1 = "select count(*) total from emp";
 		//query 적용
