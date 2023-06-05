@@ -1,21 +1,17 @@
 package dept;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Scanner;
 
-public class DeptDelete {
+import comm.DbConnect;
+
+public class DeptDelete extends DbConnect {
 
 	public static void main(String[] args) throws Exception {
 		
-		String url = "jdbc:oracle:thin:@//localhost:1521/xe";
-		String username = "c##java";
-		String userpass = "1234";
-		Class.forName("oracle.jdbc.OracleDriver");
-		Connection con = DriverManager.getConnection(url,username,userpass);
-		Statement stmt = con.createStatement();
+		// 인스턴스(객체) 처리 == 작업공간 발생
+		Statement stmt = Connection().createStatement();
 		
 		Scanner scn = new Scanner(System.in);
 		
