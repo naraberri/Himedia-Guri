@@ -8,7 +8,7 @@ public class DbConnect {
 	public static Connection Connection() throws Exception {
 		
 		//	DB연결
-		String url = "jdbc:oracle:thin:@//localhost:1521/xe";
+		String url = "jdbc:oracle:thin:@//localhost:1522/xe";
 		String username = "c##java";
 		String userpass = "1234";
 		//	드라이버(ojdbc6.jar) 연결
