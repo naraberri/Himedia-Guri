@@ -47,12 +47,17 @@ public class EmpSearchList extends DbConnect {
 		if( cnt == 0 ) {
 			System.out.println("없는 사원입니다.");
 			System.out.println("종료합니다.");
-			return;
 		}
-	      
-		String sql2 = "select e1.empno,e1.ename,e1.job,e1.sal,e2.ename as mgrname,d.dname from emp e1,emp e2,dept d "
-				+ " where e1.mgr = e2.empno and e1.deptno = d.deptno and e1.ename = upper('"+name+"')";
-		ResultSet rs2 = stmt.executeQuery(sql2); //select 전용
+		String sql2 ="";
+		if( name.equals("king") || name.equals("KING") ) {
+			sql2 = "select e1.empno,e1.ename,e1.job,e1.sal,e2.ename as mgrname,d.dname from emp e1,emp e2,dept d "
+				+ " where e1.deptno = d.deptno and e1.ename = upper('"+name+"') and e2.job = 'PRESIDENT'";
+		} else {
+			sql2 = "select e1.empno,e1.ename,e1.job,e1.sal,e2.ename as mgrname,d.dname from emp e1,emp e2,dept d "
+					+ " where e1.mgr = e2.empno and e1.deptno = d.deptno and e1.ename = upper('"+name+"')";
+		}		
+		
+		ResultSet rs2 = stmt.executeQuery(sql2);
 		
 		while(rs2.next()) {
 			String empno = rs2.getString("empno");
@@ -208,11 +213,9 @@ public class EmpSearchList extends DbConnect {
 			System.out.println("종료합니다.");
 			return;
 		}
-	      
 		String sql2 = "select e.ename,e.empno,e.job,e.sal from emp e,salgrade s "
 				+ " where s.grade ='"+name+"' and e.sal between s.losal and s.hisal";
 		ResultSet rs2 = stmt.executeQuery(sql2); //select 전용
-		
 		int number = 0;
 		System.out.println("번호\t 사원명(사원번호)\t 업무\t 부서명\t");
 		while(rs2.next()) {
